@@ -5,7 +5,7 @@ import colorama
 from colorama import Fore, Style
 colorama.init(autoreset=True)
 
-sender_email = str(input("Enter yout gmail address and press enter: "))
+sender_email = str(input("Enter your gmail address and press enter: "))
 email_password = str(getpass.getpass("Enter your email's password and press enter: "))
 
 with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
@@ -18,7 +18,7 @@ with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
 	    	smtp.login(sender_email, email_password)
 	    except smtplib.SMTPAuthenticationError:
 	    	print(Fore.RED + Style.BRIGHT + "[ERROR]: Credentials are wrong, please type them again!")
-	    	sender_email = str(input("Enter yout gmail address and press enter: "))
+	    	sender_email = str(input("Enter your gmail address and press enter: "))
 	    	email_password = str(getpass.getpass("Enter your email's password and press enter: "))
 	    	continue
 	    break
