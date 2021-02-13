@@ -7,7 +7,8 @@ READ THIS BEFORE USING HQES!
 This only works with a Gmail account. Also, you need to enable access to less
 secure apps on your Google account
 
-The program is not perfect, but stay tuned for upcoming releases
+The program is not perfect, but stay tuned for upcoming releases. You can 
+show me or improve yourself the code if you want :)
 
 If you find any bugs or have a question, please contact me!*
 
