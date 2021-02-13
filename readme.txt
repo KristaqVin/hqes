@@ -5,7 +5,7 @@ Copyright 2021 Chris Vintsanis
 READ THIS BEFORE USING HQES!
 
 This only works with a Gmail account. Also, you need to enable access to less
-secure app on your Google account
+secure apps on your Google account
 
 The program is not perfect, but stay tuned for upcoming releases
 
