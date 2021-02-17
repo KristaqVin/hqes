@@ -1,4 +1,4 @@
-#HIPPO QUICK EMAIL SERVICE v2.3 | Copyright Chris Vintsanis 2021
+#HIPPO QUICK EMAIL SERVICE v3 | Copyright Chris Vintsanis 2021
 import imaplib
 import email
 from email.header import decode_header
@@ -8,22 +8,43 @@ import colorama
 from colorama import Fore, Style
 colorama.init(autoreset=True)
 
-username = str(input("Enter your Gmail address and press enter: "))
-password = str(getpass.getpass("Enter your email's password and press enter: "))
 
-
-def read_email():
-    global username
-    global password
+def read_email(email_a, password):
     imap = imaplib.IMAP4_SSL("imap.gmail.com")
     while True:
         try:
-            imap.login(username, password)
+            imap.login(email_a, password)
         except:
+            second = True
             print(Fore.RED + Style.BRIGHT + "[ERROR]: Credentials are wrong, enter them again!")
-            username = str(input("Enter your Gmail address and press enter: "))
+            email_a = str(input("Enter your Gmail address and press enter: "))
             password = str(getpass.getpass("Enter your email's password and press enter: "))
             continue
+        try:
+            if second == True:
+                save_creds = str(input("Do you want your new info to be saved [Y/n]?: "))
+                yes = ['Y', 'y', 'Yes', 'YES']
+                if save_creds in yes:
+                    if os.path.exists('creds.txt'):
+                        os.remove('creds.txt')
+                        f = open('creds.txt', 'w+')
+                        f.write('s')
+                        f.write('\n' + email_a)
+                        f.write('\n' + password)
+                        f.close()
+                    else:
+                        f = open('creds.txt', 'w+')
+                        f.write('s')
+                        f.write('\n' + email_a)
+                        f.write('\n' + password)
+                        f.close()
+                else:
+                    pass
+            else:
+                pass
+        except UnboundLocalError:
+            pass
+
         break
 
     status, messages = imap.select("INBOX")

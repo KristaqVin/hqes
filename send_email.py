@@ -1,4 +1,4 @@
-#HIPPO QUICK EMAIL SERVICE v2.3 | Copyright Chris Vintsanis 2021
+#HIPPO QUICK EMAIL SERVICE v3 | Copyright Chris Vintsanis 2021
 import smtplib
 import getpass
 import os
@@ -6,26 +6,47 @@ import colorama
 from colorama import Fore, Style
 colorama.init(autoreset=True)
 
-sender_email = str(input("Enter your Gmail address and press enter: "))
-email_password = str(getpass.getpass("Enter your email's password and press enter: "))
 
-def send_email():
+def send_email(email, password):
 	with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
 		smtp.ehlo()
 		smtp.starttls()
 		smtp.ehlo()
 		
-		global sender_email
-		global email_password
-
 		while True:
 			try:
-				smtp.login(sender_email, email_password)
+				smtp.login(email, password)
 			except smtplib.SMTPAuthenticationError:
-				print(Fore.RED + Style.BRIGHT + "[ERROR]: Credentials are wrong, please type them again!")
-				sender_email = str(input("Enter your gmail address and press enter: "))
-				email_password = str(getpass.getpass("Enter your email's password and press enter: "))
+				second = True
+				print(Fore.RED + Style.BRIGHT + "[ERROR]: Credentials are wrong, please enter them again!")
+				email = str(input("Enter your Gmail address and press enter: "))
+				password = str(getpass.getpass("Enter your email's password and press enter: "))
 				continue
+			try:
+				if second == True:
+					save_creds = str(input("Do you want your new info to be saved [Y/n]?: "))
+					yes = ['Y', 'y', 'Yes', 'YES']
+					if save_creds in yes:
+						if os.path.exists('creds.txt'):
+							os.remove('creds.txt')
+							f = open('creds.txt', 'w+')
+							f.write('s')
+							f.write('\n' + email)
+							f.write('\n' + password)
+							f.close()
+						else:
+							f = open('creds.txt', 'w+')
+							f.write('s')
+							f.write('\n' + email)
+							f.write('\n' + password)
+							f.close()
+					else:
+						pass
+				else:
+					pass
+			except UnboundLocalError:
+				pass
+
 			break
 
 		connected = True
@@ -56,7 +77,7 @@ def send_email():
 
 		while True:
 			try:
-				smtp.sendmail(sender_email, contacts, message)
+				smtp.sendmail(email, contacts, message)
 			except smtplib.SMTPRecipientsRefused:
 				print(Fore.RED + Style.BRIGHT + "[ERROR]: The email address you entered is invalid, please type it again!")
 				for i in range(num_of_con):
